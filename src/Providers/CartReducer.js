@@ -13,7 +13,7 @@ function addProductToCart(state, action) {
     return {
         ...state,
         cart: updatedCart,
-        total: state.total + action.payload.price
+        total: state.total + action.payload.offPrice
     }
 }
 function removeProductFromCart(state, action) {
@@ -28,7 +28,7 @@ function removeProductFromCart(state, action) {
         return {
             ...state,
             cart: filteredCart,
-            total: state.total - action.payload.price
+            total: state.total - action.payload.offPrice
         }
     } else {
         updatedItem.quantity--;
@@ -36,12 +36,10 @@ function removeProductFromCart(state, action) {
         return {
             ...state,
             cart: updatedCart,
-            total: state.total - action.payload.price
+            total: state.total - action.payload.offPrice
         }
     }
 }
-
-
 
 const cartReducer = (state, action) => {
     switch (action.type) {

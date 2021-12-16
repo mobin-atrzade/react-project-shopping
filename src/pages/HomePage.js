@@ -1,13 +1,18 @@
 import React from 'react'
 import Layout from './../Layout/Layout';
 import * as data from '../data';
-import { useCartActions } from './../Providers/CartProvider';
+import { useCart, useCartActions } from './../Providers/CartProvider';
+import { CheckInCart } from '../utils/CheckInCart';
+import { toast } from 'react-toastify';
+
 
 const HomePage = () => {
+    const { cart } = useCart()
     const dispatch = useCartActions()
 
     const addProductHandler = (product) => {
         // console.log(product);
+        toast.success(`${product.name} added to Cart !`)
         dispatch({ type: "ADD_TO_CART", payload: product })
     }
 
@@ -27,7 +32,9 @@ const HomePage = () => {
                                     <button
                                         className="btn primary"
                                         onClick={() => addProductHandler(product)}
-                                    >Add to Cart</button>
+                                    >
+                                        {CheckInCart(cart, product) ? "In Cart" : "Add to Cart"}
+                                    </button>
                                 </div>
                             </section>
                         )

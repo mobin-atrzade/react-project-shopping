@@ -43,3 +43,10 @@
   background-color: #6d28d9;
   color: #fff;
 }
+button:disabled {
+  cursor: not-allowed;
+  background-color: #ccc;
+  color: #444;
+  padding: 10px 0px;
+  font-weight: bold;
+}
