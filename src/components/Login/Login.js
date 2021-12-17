@@ -1,28 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Input from '../../common/Input';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import './login.css'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { loginUser } from '../../services/loginService';
 
 const initialValues = {
     email: "",
     password: ""
 }
 
-const onSubmit = (values) => {
-    console.log(values);
-    // axios.post('http://localhost:3001/users', values)
-    //     .then(res => console.log(res.data))
-    //     .catch(err => console.log(err))
-}
 
 const validationSchema = yup.object({
     email: yup.string().email('Invalid email format').required('email is required'),
     password: yup.string().required('password is required')
 })
 
-const Login = () => {
+const Login = ({ history }) => {
+    const [error, setError] = useState(null)
+
+    const onSubmit = async (values) => {
+        // console.log(values);
+        try {
+            const { data } = await loginUser(values)
+            // console.log(data);
+            setError(null)
+            history.push('/')
+        } catch (error) {
+            // console.log(error);
+            if (error.response && error.response.data.message) {
+                setError(error.response.data.message)
+            }
+        }
+    }
 
     const formik = useFormik(
         {
@@ -45,6 +56,7 @@ const Login = () => {
                     className="btn primary">
                     Login
                 </button>
+                {error && <p style={{ color: "red" }}>{error}</p>}
                 <Link to="/signup">
                     <p style={{ marginTop: '15px' }}> Not signup yet ?</p>
                 </Link>
@@ -52,4 +64,4 @@ const Login = () => {
         </div>
     )
 }
-export default Login;
+export default withRouter(Login);
