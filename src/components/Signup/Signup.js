@@ -6,7 +6,6 @@ import './signup.css'
 import { Link, withRouter } from 'react-router-dom';
 import { signupUser } from './../../services/signupService';
 
-
 const initialValues = {
     name: "",
     email: "",
@@ -14,8 +13,6 @@ const initialValues = {
     password: "",
     passWordConfirm: ""
 }
-
-
 const validationSchema = yup.object({
     name: yup.string().required('name is required').min(5, 'Name length is not valid'),
     email: yup.string().email('Invalid email format').required('email is required'),
@@ -29,8 +26,8 @@ const validationSchema = yup.object({
 })
 
 const SignupForm = ({ history }) => {
-    console.log(history);
     const [error, setError] = useState(null)
+    // console.log(history);
     const onSubmit = async (values) => {
         // console.log(values);
         const { name, email, phoneNumber, password } = values;
@@ -84,5 +81,4 @@ const SignupForm = ({ history }) => {
         </div>
     )
 }
-
 export default withRouter(SignupForm);

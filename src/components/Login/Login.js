@@ -10,8 +10,6 @@ const initialValues = {
     email: "",
     password: ""
 }
-
-
 const validationSchema = yup.object({
     email: yup.string().email('Invalid email format').required('email is required'),
     password: yup.string().required('password is required')
